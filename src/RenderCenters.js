@@ -39,13 +39,18 @@ export default function RenderCenters() {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              {centers[key].map(center => (
-                <div>
-                  Location : {center.location}, Population : {center.population}
-                  , Calories Reqd : {center.caloriesReqd} cal
-                  <br />
-                </div>
-              ))}
+              <ul>
+                {centers[key].map(center => (
+                  <li>
+                    Name : {center.name}
+                    <br />
+                    Population : {center.population}
+                    <br />
+                    Calories Reqd : {center.caloriesReqd} cal
+                    <br />
+                  </li>
+                ))}
+              </ul>
             </Typography>
           </AccordionDetails>
         </Accordion>
