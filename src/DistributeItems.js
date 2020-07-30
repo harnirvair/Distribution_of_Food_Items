@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import _, { set } from "lodash";
 import createPairs from "./PairCreation";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
@@ -19,49 +20,71 @@ const useStyles = makeStyles(theme => ({
 
 const DistributeItems = () => {
   const classes = useStyles();
-  const [pairs, setPairs] = useState([]);
+  const centers = JSON.parse(localStorage.getItem("centers"));
+  const [pairs, setPairs] = useState({});
+
   useEffect(() => {
     const defaultPairs = createPairs();
-    setPairs(defaultPairs);
+    const groupedPairs = _.groupBy(defaultPairs, pair => pair.center.name);
+    setPairs(groupedPairs);
   }, []);
   return (
     <div className={classes.root}>
       {pairs.length === 0 && <Typography>No pairs found!</Typography>}
-      {pairs.map(pair => (
+      {Object.keys(pairs).map(key => (
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography className={classes.heading}>
-              {pair.center.name} and {pair.item.name}
-            </Typography>
+            <Typography className={classes.heading}>{key}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              <b>Center</b>
+              <b>Center : </b>
               <br />
-              Name : {pair.center.name}
+              Name : {pairs[key][0].center.name}
               <br />
-              Location : {pair.center.location}
+              Location : {pairs[key][0].center.location}
               <br />
-              Population : {pair.center.population}
+              Population : {pairs[key][0].center.population}
               <br />
-              Calorie Requirement : {pair.center.caloriesReqd} cal
+              Calorie Requirement :{" "}
+              {
+                centers.filter(center => center.name === key)[0].caloriesReqd
+              }{" "}
+              cal
               <br />
-              <b>Item</b>
-              <br />
-              Name : {pair.item.name}
-              <br />
-              Location : {pair.item.location}
-              <br />
-              Quantity : {pair.item.quantity}
-              <br />
-              Total Calories : {pair.item.calories} cal
-              <br />
-              <b>Fitness Score : </b>
-              {pair.fitnessScore}
+              <ul>
+                {pairs[key].map(pair => (
+                  <li>
+                    <b>Item - </b>
+                    <br />
+                    Name : {pair.item.name}
+                    <br />
+                    Location : {pair.item.location}
+                    <br />
+                    Quantity : {pair.item.quantity}
+                    <br />
+                    Calories Available : {pair.item.calories}
+                    <br />
+                    Calories Received :{" "}
+                    {Math.min(pair.item.calories, pair.center.caloriesReqd)} cal
+                    <br />
+                    <b>Fitness Score : </b>
+                    {pair.fitnessScore}
+                  </li>
+                ))}
+              </ul>
+              <b> Total Calories Received : </b>{" "}
+              {pairs[key].reduce(
+                (total, pair) =>
+                  total +
+                  Math.min(pair.item.calories, pair.center.caloriesReqd),
+                0
+              )}{" "}
+              cal
             </Typography>
           </AccordionDetails>
         </Accordion>

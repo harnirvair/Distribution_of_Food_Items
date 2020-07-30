@@ -40,13 +40,9 @@ const distance = (location1, location2) => {
 const Pair = (center, item) => {
   let distanceScore =
     (MAX_DISTANCE - distance(center.location, item.location)) / MAX_DISTANCE;
-  let calorieRatio = item.calories / center.caloriesReqd;
-  let calorieScore =
-    calorieRatio >= 0.2
-      ? 1 / Math.exp(Math.max(0, 1 - item.calories / center.caloriesReqd))
-      : 0;
+  let calorieRatio = Math.min(item.calories / center.caloriesReqd, 1);
+  let calorieScore = 1 / Math.exp(1 - calorieRatio);
   let score = 0.25 * distanceScore + 0.75 * calorieScore;
-  score /= 2;
   console.log({ d: distanceScore, c: calorieScore, s: score });
   return {
     center: center,
