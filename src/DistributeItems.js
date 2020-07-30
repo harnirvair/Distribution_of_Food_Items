@@ -42,6 +42,8 @@ const DistributeItems = () => {
             <Typography>
               <b>Center</b>
               <br />
+              Name : {pair.center.name}
+              <br />
               Location : {pair.center.location}
               <br />
               Population : {pair.center.population}
@@ -49,6 +51,8 @@ const DistributeItems = () => {
               Calorie Requirement : {pair.center.caloriesReqd} cal
               <br />
               <b>Item</b>
+              <br />
+              Name : {pair.item.name}
               <br />
               Location : {pair.item.location}
               <br />
