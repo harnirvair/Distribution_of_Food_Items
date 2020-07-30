@@ -67,7 +67,7 @@ const DistributeItems = () => {
                     <br />
                     Quantity : {pair.item.quantity}
                     <br />
-                    Calories Available : {pair.item.calories}
+                    Calories Available : {pair.item.calories} cal
                     <br />
                     Calories Received :{" "}
                     {Math.min(pair.item.calories, pair.center.caloriesReqd)} cal
