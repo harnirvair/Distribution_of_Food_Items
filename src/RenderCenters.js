@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -16,30 +17,35 @@ const useStyles = makeStyles(theme => ({
     fontWeight: theme.typography.fontWeightRegular
   }
 }));
+
 export default function RenderCenters() {
-  const centers = JSON.parse(localStorage.getItem("centers"));
+  const centers = _.groupBy(
+    JSON.parse(localStorage.getItem("centers")),
+    center => center.location
+  );
   const classes = useStyles();
 
   return (
     <Container maxWidth="sm" fixed="true" className={classes.root}>
       {centers.length === 0 && <Typography>No center found!</Typography>}
-      {centers.map(center => (
+      {Object.keys(centers).map(key => (
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography className={classes.heading}>{center.name}</Typography>
+            <Typography className={classes.heading}>{key}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              Location : {center.location}
-              <br />
-              Population : {center.population}
-              <br />
-              Calorie Requirement : {center.caloriesReqd} cal
-              <br />
+              {centers[key].map(center => (
+                <div>
+                  Location : {center.location}, Population : {center.population}
+                  , Calories Reqd : {center.caloriesReqd} cal
+                  <br />
+                </div>
+              ))}
             </Typography>
           </AccordionDetails>
         </Accordion>

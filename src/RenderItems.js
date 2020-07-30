@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -17,29 +18,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export default function RenderItems() {
-  const items = JSON.parse(localStorage.getItem("items"));
+  const items = _.groupBy(
+    JSON.parse(localStorage.getItem("items")),
+    item => item.name
+  );
   const classes = useStyles();
 
+  console.log(items);
   return (
     <Container maxWidth="sm" fixed="true" className={classes.root}>
       {items.length === 0 && <Typography>No item found!</Typography>}
-      {items.map(item => (
+      {Object.keys(items).map(key => (
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography className={classes.heading}>{item.name}</Typography>
+            <Typography className={classes.heading}>{key}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              Location : {item.location}
-              <br />
-              Quantity : {item.quantity}
-              <br />
-              Total Calories : {item.calories} cal
-              <br />
+              {items[key].map(item => (
+                <div>
+                  Location : {item.location}, Quantity : {item.quantity},
+                  Calories : {item.calories} cal
+                  <br />
+                </div>
+              ))}
             </Typography>
           </AccordionDetails>
         </Accordion>
