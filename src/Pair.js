@@ -37,16 +37,18 @@ const distance = (location1, location2) => {
   return dist[idx1][idx2];
 };
 
-const Pair = (center, allocatedItems) => {
-  let score = 0;
-  allocatedItems.forEach(item => {
-    const distanceScore = distance(item.location, center.location);
-    score += (MAX_DISTANCE - distanceScore) / MAX_DISTANCE;
-  });
-  score /= allocatedItems.length();
+const Pair = (center, item) => {
+  let distanceScore =
+    (MAX_DISTANCE - distance(center.location, item.location)) / MAX_DISTANCE;
+  let calorieScore =
+    1 / Math.exp(Math.max(0, 1 - item.calories / center.caloriesReqd));
+  console.log("Distscore", distanceScore);
+  console.log("CAlscore", calorieScore);
+  let score = distanceScore + calorieScore;
+  score /= 2;
   return {
     center: center,
-    allocatedItems: allocatedItems,
+    item: item,
     fitnessScore: score
   };
 };

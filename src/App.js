@@ -4,10 +4,11 @@ import { Container } from "@material-ui/core";
 import MenuBar from "./MenuBar";
 import { makeStyles } from "@material-ui/core/styles";
 import Donate from "./Donate";
-import { foodItems } from "./Constants";
+import { foodItems, defaultItems, defaultCenters } from "./Constants";
 import RenderItems from "./RenderItems";
 import AddCenter from "./AddEvacuationCenter";
 import RenderCenters from "./RenderCenters";
+import DistributeItems from "./DistributeItems";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,8 +19,8 @@ const useStyles = makeStyles(theme => ({
 export default function App() {
   const classes = useStyles();
   const [mode, setMode] = useState("");
-  const [items, setItems] = useState([]);
-  const [centers, setCenters] = useState([]);
+  const [items, setItems] = useState(defaultItems);
+  const [centers, setCenters] = useState(defaultCenters);
 
   const addItem = item => {
     let tempItems = items;
@@ -49,8 +50,13 @@ export default function App() {
     localStorage.setItem("centers", JSON.stringify(centers));
   }, [centers]);
 
-  console.log("ITEMS", items);
-  console.log("CENTERS", centers);
+  // let tot = items.reduce((total, item) => total + item.calories, 0);
+  // let reqd = centers.reduce((total, center) => total + center.caloriesReqd, 0);
+  // console.log("TOT", tot);
+  // console.log("REQD", reqd);
+  // console.log("ITEMS", items);
+  // console.log("CENTERS", centers);
+  // console.log("DEFAULTITEMS", defaultItems);
   return (
     <Container maxWidth="md" fixed="true" className={classes.root}>
       <MenuBar setMode={setMode} />
@@ -58,6 +64,7 @@ export default function App() {
       {mode === "renderItems" && <RenderItems />}
       {mode === "add" && <AddCenter addCenter={addCenter} />}
       {mode === "renderCenters" && <RenderCenters />}
+      {mode === "distribute" && <DistributeItems />}
     </Container>
   );
 }
