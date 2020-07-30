@@ -1,6 +1,6 @@
 import Pair from "./Pair";
 
-const THRESHOLD = 0.4;
+const THRESHOLD = 0.25;
 
 const getIndexOfARandomElement = array => {
   const pos = Math.floor(Math.random() * array.length);
@@ -10,23 +10,28 @@ const getIndexOfARandomElement = array => {
 const PairCreation = () => {
   const unpairedItems = JSON.parse(localStorage.getItem("items"));
   const unpairedCenters = JSON.parse(localStorage.getItem("centers"));
-  console.log("UC", unpairedCenters);
-  console.log("UI", unpairedItems);
-  let unpairedCentersCalorieReqd = unpairedCenters.map(
-    center => center.caloriesReqd
-  );
 
   let currentPopulation = [];
 
-  while (unpairedCenters.length > 0) {
+  while (unpairedCenters.length > 0 && unpairedItems.length > 0) {
     let centerIndex = getIndexOfARandomElement(unpairedCenters);
     let center = unpairedCenters[centerIndex];
+    unpairedCenters.splice(centerIndex, 1);
+
     let itemIndex = getIndexOfARandomElement(unpairedItems);
     let item = unpairedItems[itemIndex];
     unpairedItems.splice(itemIndex, 1);
-    unpairedCentersCalorieReqd[centerIndex] -= item.calories;
-    if (unpairedCentersCalorieReqd[centerIndex] <= 0) {
-      unpairedCenters.splice(centerIndex, 1);
+
+    if (center.caloriesReqd > item.calories) {
+      unpairedCenters.push({
+        ...center,
+        caloriesReqd: center.caloriesReqd - item.calories
+      });
+    } else if (center.caloriesReqd < item.calories) {
+      unpairedItems.push({
+        ...item,
+        calories: item.calories - center.caloriesReqd
+      });
     }
 
     currentPopulation.push(Pair(center, item));
@@ -132,7 +137,7 @@ const PairCreation = () => {
 
     disseminationIterations -= 1;
   }
-  console.log("CURR_POP", currentPopulation);
+
   return currentPopulation;
 };
 

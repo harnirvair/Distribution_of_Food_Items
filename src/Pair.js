@@ -45,8 +45,9 @@ const Pair = (center, item) => {
     calorieRatio >= 0.2
       ? 1 / Math.exp(Math.max(0, 1 - item.calories / center.caloriesReqd))
       : 0;
-  let score = distanceScore + calorieScore;
+  let score = 0.25 * distanceScore + 0.75 * calorieScore;
   score /= 2;
+  console.log({ d: distanceScore, c: calorieScore, s: score });
   return {
     center: center,
     item: item,
