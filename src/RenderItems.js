@@ -39,13 +39,15 @@ export default function RenderItems() {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              {items[key].map(item => (
-                <div>
-                  Location : {item.location}, Quantity : {item.quantity},
-                  Calories : {item.calories} cal
-                  <br />
-                </div>
-              ))}
+              <ul>
+                {items[key].map(item => (
+                  <li>
+                    Location : {item.location}, Quantity : {item.quantity},
+                    Calories : {item.calories} cal
+                    <br />
+                  </li>
+                ))}
+              </ul>
             </Typography>
           </AccordionDetails>
         </Accordion>
