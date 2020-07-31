@@ -50,12 +50,20 @@ const DistributeItems = () => {
               <br />
               Population : {pairs[key][0].center.population}
               <br />
-              Calorie Requirement :{" "}
+              Total Calorie Requirement :{" "}
               {
                 centers.filter(center => center.name === key)[0].caloriesReqd
               }{" "}
               cal
               <br />
+              Total Calories Received :{" "}
+              {pairs[key].reduce(
+                (total, pair) =>
+                  total +
+                  Math.min(pair.item.calories, pair.center.caloriesReqd),
+                0
+              )}{" "}
+              cal
               <ul>
                 {pairs[key].map(pair => (
                   <li>
@@ -77,14 +85,6 @@ const DistributeItems = () => {
                   </li>
                 ))}
               </ul>
-              <b> Total Calories Received : </b>{" "}
-              {pairs[key].reduce(
-                (total, pair) =>
-                  total +
-                  Math.min(pair.item.calories, pair.center.caloriesReqd),
-                0
-              )}{" "}
-              cal
             </Typography>
           </AccordionDetails>
         </Accordion>

@@ -43,7 +43,7 @@ const Pair = (center, item) => {
   let calorieRatio = Math.min(item.calories / center.caloriesReqd, 1);
   let calorieScore = 1 / Math.exp(1 - calorieRatio);
   let score = 0.25 * distanceScore + 0.75 * calorieScore;
-  console.log({ d: distanceScore, c: calorieScore, s: score });
+
   return {
     center: center,
     item: item,
