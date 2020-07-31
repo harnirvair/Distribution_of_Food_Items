@@ -10,8 +10,8 @@ import AddCenter from "./AddEvacuationCenter";
 import RenderCenters from "./RenderCenters";
 import DistributeItems from "./DistributeItems";
 import {
-  DataGenerationFoodItems,
-  DataGenerationEvacuationCenters
+  GenerateDonatedItems,
+  GenerateEvacuationCenters
 } from "./DataGeneration";
 
 const useStyles = makeStyles(theme => ({
@@ -20,8 +20,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const defaultItems = DataGenerationFoodItems();
-const defaultCenters = DataGenerationEvacuationCenters();
+const defaultItems = GenerateDonatedItems();
+const defaultCenters = GenerateEvacuationCenters();
 
 export default function App() {
   const classes = useStyles();
@@ -61,9 +61,7 @@ export default function App() {
   let reqd = centers.reduce((total, center) => total + center.caloriesReqd, 0);
   console.log("TOT", tot);
   console.log("REQD", reqd);
-  // console.log("ITEMS", items);
-  // console.log("CENTERS", centers);
-  // console.log("DEFAULTITEMS", defaultItems);
+
   return (
     <Container maxWidth="md" fixed="true" className={classes.root}>
       <MenuBar setMode={setMode} />

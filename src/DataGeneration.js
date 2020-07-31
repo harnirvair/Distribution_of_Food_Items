@@ -20,7 +20,7 @@ const getRandomValue = range => {
   return Math.floor(Math.random() * range);
 };
 
-export const DataGenerationFoodItems = () => {
+export const GenerateDonatedItems = () => {
   let data = [];
   let iterations = 1000;
   while (iterations > 0) {
@@ -47,7 +47,7 @@ export const DataGenerationFoodItems = () => {
   return data;
 };
 
-export const DataGenerationEvacuationCenters = () => {
+export const GenerateEvacuationCenters = () => {
   let data = [];
   let iterations = 25;
   while (iterations > 0) {
