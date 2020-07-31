@@ -30,7 +30,9 @@ const DistributeItems = () => {
   }, []);
   return (
     <div className={classes.root}>
-      {pairs.length === 0 && <Typography>No pairs found!</Typography>}
+      {Object.keys(pairs).length === 0 && (
+        <Typography>Distributing items...</Typography>
+      )}
       {Object.keys(pairs).map(key => (
         <Accordion>
           <AccordionSummary

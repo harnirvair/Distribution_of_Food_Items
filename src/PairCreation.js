@@ -1,6 +1,6 @@
 import Pair from "./Pair";
 
-const THRESHOLD = 0.25;
+const THRESHOLD = 0.5;
 
 const getIndexOfARandomElement = array => {
   const pos = Math.floor(Math.random() * array.length);
