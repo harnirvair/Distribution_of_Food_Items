@@ -1,26 +1,9 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  Button,
-  Container
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { TextField, Button, Container } from "@material-ui/core";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { foodItems, defaultItem } from "./Constants";
-
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
-}));
 
 export default function Donate({ addItem }) {
   const [item, setItem] = useState(defaultItem);
