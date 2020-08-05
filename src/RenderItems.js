@@ -42,8 +42,8 @@ export default function RenderItems() {
               <ul>
                 {items[key].map(item => (
                   <li>
-                    Location : {item.location}, Quantity : {item.quantity},
-                    Calories : {item.calories} cal
+                    Location : {item.location}, Quantity : {item.quantity} kg,
+                    Calories : {item.calories / 1000} Kcal
                     <br />
                   </li>
                 ))}

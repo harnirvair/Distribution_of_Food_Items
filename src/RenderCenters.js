@@ -46,7 +46,7 @@ export default function RenderCenters() {
                     <br />
                     Population : {center.population}
                     <br />
-                    Calories Reqd : {center.caloriesReqd} cal
+                    Calories Reqd : {center.caloriesReqd / 1000} Kcal
                     <br />
                   </li>
                 ))}
